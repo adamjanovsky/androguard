@@ -678,7 +678,7 @@ class DecompilerJADX:
                     continue
                 # as the path begins always with `self.res` (hopefully), we remove that length
                 # also, all files should end with .java
-                path = os.path.join(root, f)[len(tmpfolder) + 1:-5]
+                path = os.path.join(root, f)[len(tmpfolder) + len('sources/') + 1:-5]
                 path = path.replace(os.sep, "/")
 
                 # Special care for files without package
@@ -696,7 +696,7 @@ class DecompilerJADX:
 
         # Next, try to find files for the classes we have
         for cl in andr_class_names:
-            fname = self._find_class(str(cl), tmpfolder)
+            fname = self._find_class(str(cl), os.path.join(tmpfolder, 'sources'))
             if fname:
                 if "L{};".format(cl) not in self.classes:
                     with open(fname, "rb") as fp:
